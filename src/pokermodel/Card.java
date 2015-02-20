@@ -2,6 +2,8 @@ package pokermodel;
 
 import java.awt.Image;
 
+//my first git change!!!
+
 public class Card 
 {
 
