@@ -17,12 +17,24 @@ public class Deck
   public static int NUM_VALUES = 13;
 
   /**
-   * Constructor creates and shuffles the deck
+   * Create the deck
    * Bryan Pearson
    */
   public Deck() 
   {
 	  initializeDeck();
+	  shuffle();
+	  cut();
+  }
+  
+  /**
+   * Create the deck
+   * @param customDeck a vector of cards that will become the deck
+   * @author Bryan Pearson
+   */
+  public Deck(Vector<Card> customDeck)
+  {
+	  myCards = customDeck;
 	  shuffle();
 	  cut();
   }
@@ -155,18 +167,47 @@ public class Deck
    */
   public boolean cut() 
   {
-	  int cutSize = myCards.size() / 2;
-	  return true;
+	  if(myCards.size() > 1)
+	  {
+		  int cutSize = myCards.size() / 2;
+	  
+		  /*Iterate through the first half of the deck and 
+		   * move them to the bottom by removing them first
+		   * and then re-adding them.
+		   */
+		  for(int i = 0; i < cutSize; i++)
+		  {
+			  Card currentCard = myCards.get(i);
+			  myCards.remove(i);
+			  myCards.add(currentCard);
+		  }
+		  
+		  return true;
+	  }
+	  
+	  else
+	  {
+		  return false;
+	  }
+	  
   }
 
+  /**
+   * Print the deck to a string
+   */
   public String toString() 
   {
-	  return null;
+	  return "Number of cards in deck: " + myCards.size();
   }
 
+  /**
+   * Clones the current deck
+   * @author Bryan Pearson
+   */
   public Object clone() 
   {
-	  return null;
+	  Deck deck = new Deck(myCards);
+	  return deck;
   }
 
   public Vector<Card> getCards()
