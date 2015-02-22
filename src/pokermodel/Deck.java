@@ -10,6 +10,7 @@ public class Deck
 	 * @author Michael Zirpoli
 	 * @author Bryan Pearson
 	 */
+	
   private Vector<Card> myCards;
 
   public static int MAX_NUM_CARDS = 52;
@@ -194,10 +195,27 @@ public class Deck
 
   /**
    * Print the deck to a string
+   * @author Bryan Pearson
    */
   public String toString() 
   {
-	  return "Number of cards in deck: " + myCards.size();
+	  String message = "";
+	  
+	  //Print all suits and values
+	  for(int i = 0; i < myCards.size(); i++)
+	  {
+		  Card currentCard = myCards.get(i);
+		  Suit currentSuit = currentCard.getSuit();
+		  CardValue currentValue = currentCard.getValue();
+		  
+		  message = message.concat("\n" + currentSuit.toString() + " " 
+		  + currentValue.toString());
+	  }
+	  
+	  //Print deck size
+	  message = message.concat("\nCards in deck: " + myCards.size());
+	  
+	  return message;
   }
 
   /**

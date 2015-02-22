@@ -16,7 +16,8 @@ public class CardTesting {
 	 * Ace of Hearts compared to Ace of Spades (different suits, same value)
 	 */
 	@Test
-	public void sameValueDifferentSuit() {
+	public void sameValueDifferentSuit() 
+	{
 		Card card1 = new Card(Suit.HEARTS, CardValue.ACE);
 		Card card2 = new Card(Suit.SPADES, CardValue.ACE);
 		assertTrue(card1.compareTo(card2) == 0);
