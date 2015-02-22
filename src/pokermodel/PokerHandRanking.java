@@ -1,6 +1,6 @@
 package pokermodel;
 
-enum PokerHandRanking 
+public enum PokerHandRanking 
 {
 
   HIGH_CARD ( 1 ),

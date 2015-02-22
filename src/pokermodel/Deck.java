@@ -3,10 +3,6 @@ package pokermodel;
 import java.util.Vector;
 import java.util.*;
 
-/*
- * Hello
- * Hopefully you should see this change after I push it
- */
 public class Deck 
 {
 	/**
@@ -142,6 +138,7 @@ public class Deck
    */
   public Card deal() 
   {
+	  //Get the top card
 	  Card card = myCards.get(0);
 	  
 	  //The card is now removed from the deck
@@ -158,8 +155,8 @@ public class Deck
    */
   public boolean cut() 
   {
-	  //TODO
-	  return false;
+	  int cutSize = myCards.size() / 2;
+	  return true;
   }
 
   public String toString() 

@@ -7,13 +7,14 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses
 (
-	{ 
-		DeckTesting.class, 
-		HandTesting.class, 
-		PlayerTesting.class,
-		PokerHandTesting.class, 
-		PokerModelTesting.class 
-	}
+		{ 
+			CardTesting.class,
+			DeckTesting.class, 
+			HandTesting.class, 
+			PlayerTesting.class,
+			PokerHandTesting.class, 
+			PokerModelTesting.class 
+		}
 )
 public class AllTests 
 {

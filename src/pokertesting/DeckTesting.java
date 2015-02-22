@@ -4,10 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.Vector;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import pokermodel.Card;
@@ -17,36 +13,116 @@ import pokermodel.Suit;
 
 public class DeckTesting 
 {
+	private CardValue[] cardValue = 
+	{
+		CardValue.ACE, CardValue.TWO, CardValue.THREE, 
+		CardValue.FOUR, CardValue.FIVE, CardValue.SIX, 
+		CardValue.SEVEN, CardValue.EIGHT, CardValue.NINE, 
+		CardValue.TEN, CardValue.JACK, CardValue.QUEEN, CardValue.KING
+	};
 	
-	/*
-	 * Test cases for the Deck class
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
+	private Suit[] suit =
+	{ 
+		Suit.CLUBS, Suit.DIAMONDS, Suit.HEARTS, Suit.SPADES
+	};
+	
+	
+	/**
+	 * Check that ALL cards are present (in no particular order)
+	 */
+	
+	@Test
+	public void hasAllCardsTest() 
+	{
+		Deck deck = new Deck();
+		Vector<Card> cardsDrawn = new Vector<Card>();
+		for (int i = 0; i <Deck.MAX_NUM_CARDS; i++)
+		{
+			cardsDrawn.add(deck.deal());
+		}
+		
+		for (Suit s : suit)
+		{
+			for (CardValue c : cardValue)
+			{
+				assertTrue(""+s+" "+c+" not found", cardsDrawn.contains(new Card( s, c)));
+			}
+		}
+		
+	}
+	
+	/**
+	 * Test deck returns null when empty
+	 */
+	
+	@Test
+	public void returnsNullWhenEmpty() 
+	{
+		Deck deck = new Deck();
+		Vector<Card> cardsDrawn = new Vector<Card>();
+		for (int i = 0; i <Deck.MAX_NUM_CARDS; i++)
+		{
+			cardsDrawn.add(deck.deal());
+		}
+		assertTrue(deck.deal() == null);
+	}
+	
+	/**
+	 * draw one card, check it's NOT in deck
 	 */
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception 
+	@Test
+	public void cardNotInDeckAfterDrawn()
 	{
+		Deck deck = new Deck();
+		Card card = deck.deal();
+		assertFalse(deck.getCards().contains(card));
 	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception 
+	
+	/**
+	 * clone deck, assert they are the same
+	 */
+	
+	@Test
+	public void compare2ClonedDecks()
 	{
+		Deck deck1 = new Deck();
+		Deck deck2 = (Deck)deck1.clone();
+		for (int i = 0; i < Deck.MAX_NUM_CARDS; i++)
+		{
+			assertTrue(deck1.getCards().get(i).compareTo(deck2.getCards().get(i)) == 0);
+		}
 	}
-
-	@Before
-	public void setUp() throws Exception 
+	
+	/**
+	 * clone deck, draw card from clone, cut original, draw 27 times,
+	 * assert 27th card is same as card drawn from clone 
+	 */
+	
+	@Test
+	public void testCut()
 	{
-	}
+		Deck deck = new Deck();
+		assertTrue(deck.cut());
+		
+		Vector<Card> cardsDrawn = new Vector<Card>();
+		for (int i = 0; i <Deck.MAX_NUM_CARDS; i++)
+		{
+			cardsDrawn.add(deck.deal());
+		}
+		
+		for (Suit s : suit)
+		{
+			for (CardValue c : cardValue)
+			{
+				assertTrue(""+s+" "+c+" not found", cardsDrawn.contains(new Card( s, c)));
+			}
+		}
 
-	@After
-	public void tearDown() throws Exception 
-	{
 	}
 	
 	/**
 	 * Make sure that 52 cards are in the deck.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void allCardsInDeck()
@@ -54,17 +130,17 @@ public class DeckTesting
 		Deck deck = new Deck();
 		int deckSize = deck.getCards().size();
 		
-		assertTrue(deckSize == 52);
+		assertTrue(deckSize == Deck.MAX_NUM_CARDS);
 	}
 	
 	/**
 	 * Test to make sure that shuffling works.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void shuffleWorks()
 	{
 		Deck deck = new Deck();
+		Deck deckClone = (Deck)deck.clone();
 		Vector<Card> initialSet, newSet;
 		int deckSize, numberOfEqualCards = 0;
 		deckSize = deck.getCards().size();
@@ -73,10 +149,10 @@ public class DeckTesting
 		initialSet = deck.getCards();
 		
 		//Shuffle the deck
-		deck.shuffle();
+		deckClone.shuffle();
 		
 		//Get the newly shuffled set of cards
-		newSet = deck.getCards();
+		newSet = deckClone.getCards();
 		
 		/*
 		 * Run a loop that iterates through the deck
@@ -135,13 +211,14 @@ public class DeckTesting
 	
 	/**
 	 * Test to make sure that every card in the deck is unique
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void noDuplicateCards()
 	{
 		Deck deck = new Deck();
-		Vector<Card> deckSet = deck.getCards();
+		Vector<Card> deckSet1 = deck.getCards();
+		deck = new Deck();
+		Vector<Card> deckSet2 = deck.getCards();
 		
 		/*
 		 * The PokerModelTesting class has a method that
@@ -151,7 +228,7 @@ public class DeckTesting
 		PokerModelTesting pmt = new PokerModelTesting();
 		
 		//Assert that no duplicate cards appear in the deck
-		assertFalse(pmt.compareCards(deckSet, deckSet));
+		assertFalse(pmt.compareCards(deckSet1, deckSet2));
 	}
 	
 	/*
@@ -169,7 +246,6 @@ public class DeckTesting
 	 * Check to make sure that all aces, 
 	 * jacks, queens, kings, and numbers
 	 * 2-10 appear thirteen times each.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void allValues()
@@ -191,7 +267,6 @@ public class DeckTesting
 	
 	/**
 	 * Check to make sure that spades appears thirteen times.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void allSpades()
@@ -204,7 +279,6 @@ public class DeckTesting
 	
 	/**
 	 * Check to make sure that diamonds appears thirteen times.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void allDiamonds()
@@ -218,7 +292,6 @@ public class DeckTesting
 	
 	/**
 	 * Check to make sure that hearts appears thirteen times.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void allHearts()
@@ -232,7 +305,6 @@ public class DeckTesting
 	
 	/**
 	 * Check to make sure that clubs appears thirteen times.
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void allClubs()
@@ -246,7 +318,6 @@ public class DeckTesting
 	
 	/**
 	 * Test to make sure that cloning returns a Deck object
-	 * @author Bryan Pearson
 	 */
 	@Test
 	public void cloningWorks()
@@ -260,7 +331,6 @@ public class DeckTesting
 	 * @param cardSet the set of cards
 	 * @param matchSuit the suit that will be matched to the cards in the set
 	 * @return how many times the suit appeared in the set
-	 * @author Bryan Pearson
 	 */
 	private int checkSuitFrequency(Vector<Card> cardSet, String matchSuit)
 	{
@@ -291,7 +361,6 @@ public class DeckTesting
 	 * @param cardSet the set of cards
 	 * @param matchValue the card value that will be matched to the cards in the set
 	 * @return how many times the card value appeared in the set
-	 * @author Bryan Pearson
 	 */
 	private int checkValueFrequency(Vector<Card> cardSet, int matchValue)
 	{
@@ -316,5 +385,4 @@ public class DeckTesting
 		
 		return counter;
 	}
-
 }

@@ -64,6 +64,11 @@ public class PokerHand extends Hand
   {
 	  return null;
   }
+  
+  public Object clone()
+  {
+	  return null;
+  }
 
   public int compareTo(PokerHand hand) 
   {

@@ -4,64 +4,40 @@ import static org.junit.Assert.*;
 
 import java.util.Vector;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import pokermodel.Card;
 import pokermodel.CardValue;
-import pokermodel.Deck;
 import pokermodel.Hand;
-import pokermodel.PokerModel;
 import pokermodel.Suit;
 
 public class HandTesting 
 {
-	/*
-	 * Test cases for the Hand class
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
-	 */
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception 
-	{
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception 
-	{
-	}
-
-	@Before
-	public void setUp() throws Exception 
-	{
-	}
-
-	@After
-	public void tearDown() throws Exception 
-	{
-	}
 		
 	/**
 	 * Test to make sure that the player can actually
 	 * discard cards.
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
 	 */
 	@Test
 	public void discardWorks()
 	{
-		PokerModel model = new PokerModel();
-		model.dealHands();
-		
-		Hand hand = model.getPlayer().getHand();
+		Hand hand = new Hand(5);
+		hand.addCard(new Card(Suit.SPADES, CardValue.JACK));
+		hand.addCard(new Card(Suit.DIAMONDS, CardValue.THREE));
+		hand.addCard(new Card(Suit.HEARTS, CardValue.ACE));
+		hand.addCard(new Card(Suit.HEARTS, CardValue.SEVEN));
+		hand.addCard(new Card(Suit.HEARTS, CardValue.NINE));
+
 		int discardedCount, initialHandSize, newHandSize;
 		
 		initialHandSize = hand.getCards().size();
+		Vector<Card> cards = hand.getCards();
+		((Card)cards.get(0)).toggleSelected();
+		((Card)cards.get(3)).toggleSelected();
 		discardedCount = hand.discard();
+		
+		//Assert that exactly two cards were discarded
+		assertTrue(discardedCount == 2);
 		newHandSize = hand.getCards().size();
 		
 		//Assert that the new hand size is equal to the initial
@@ -72,137 +48,95 @@ public class HandTesting
 	/**
 	 * Make sure that the player cannot add cards
 	 * if the hand is currently full.
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
 	 */
 	@Test
 	public void cannotAddCard()
 	{
-		PokerModel model = new PokerModel();
-		model.dealHands();
-		
-		Hand hand = model.getPlayer().getHand();
-		Deck deck = new Deck();
-		Card card = deck.getCards().firstElement();
+		Hand hand = new Hand(5);
+		hand.addCard(new Card(Suit.SPADES, CardValue.JACK));
+		hand.addCard(new Card(Suit.DIAMONDS, CardValue.THREE));
+		hand.addCard(new Card(Suit.HEARTS, CardValue.ACE));
+		hand.addCard(new Card(Suit.HEARTS, CardValue.SEVEN));
+		hand.addCard(new Card(Suit.HEARTS, CardValue.NINE));
 		
 		//Assert that addCard returns false if the 
 		//player tries to add to a full deck
-		assertFalse(hand.addCard(card));
+		assertFalse(hand.addCard(new Card(Suit.SPADES, CardValue.TEN)));
 	}
 	
 	/**
 	 * Make sure that the player CAN add cards
 	 * if the hand isn't currently full
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
 	 */
 	@Test
 	public void canAddCard()
 	{
-		PokerModel model = new PokerModel();
-		model.dealHands();
+		boolean added = true;
+		Hand hand = new Hand(5);
+		added = added && hand.addCard(new Card(Suit.SPADES, CardValue.JACK));
+		added = added && hand.addCard(new Card(Suit.DIAMONDS, CardValue.THREE));
+		added = added && hand.addCard(new Card(Suit.HEARTS, CardValue.ACE));
+		added = added && hand.addCard(new Card(Suit.HEARTS, CardValue.SEVEN));
+		added = added && hand.addCard(new Card(Suit.HEARTS, CardValue.NINE));
 		
-		Hand hand = model.getPlayer().getHand();
-		Deck deck = new Deck();
-		Card card = deck.getCards().firstElement();
-		int oldHandSize, newHandSize;
-		
-		oldHandSize = hand.getCards().size();
-		hand.discard();
-		newHandSize = hand.getCards().size();
-		
-		if(newHandSize < oldHandSize)
-		{
-			assertTrue(hand.addCard(card));
-		}
+		assertTrue(added);
 	}
 	
 	/**
-	 * Test to make sure that that adding cards
-	 * actually works. That is, make sure that
-	 * the card that is added appeared in the deck
-	 * before but does not appear afterwards.
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
+	 * assert constructor works 
+	 * 
 	 */
 	@Test
-	public void addCardWorks()
-	{
-		PokerModel model = new PokerModel();
-		model.dealHands();
-		
-		Hand hand = model.getPlayer().getHand();
-		Deck deck = new Deck();
-		Card card = deck.getCards().firstElement();
-		Vector<Card> initialDeckSet, newDeckSet;
-		int oldHandSize, newHandSize;
-		
-		oldHandSize = hand.getCards().size();
-		initialDeckSet = deck.getCards();
-		hand.discard();
-		newHandSize = hand.getCards().size();
-		
-		if(newHandSize < oldHandSize)
-		{
-			hand.addCard(card);
-		}
-		
-		newDeckSet = deck.getCards();
-		
-		assertTrue(this.cardAppearsInSet(card, initialDeckSet));
-		assertFalse(this.cardAppearsInSet(card, newDeckSet));
+	public void testMaxCards(){
+		Hand hand = new Hand(12);
+		assertTrue(hand.getMaxNumberCards() == 12);
+	} 
+	
+	/**
+	 * test when a invalid value is passes, it reverts to a default max hand size
+	 */
+	
+	@Test
+	public void testDefaultMax(){
+		Hand hand = new Hand(-1);
+		assertTrue(hand.getMaxNumberCards() == 5);
 		
 	}
 	
 	/**
-	 * Tests whether a specific card appears in a set or not
-	 * @param matchingCard the card being referenced
-	 * @param cardSet the set of cards being referenced
-	 * @return whether the card is found in the set or not
-	 * @author Bryan Pearson
-	 * @author Michael Zirpoli
+	 * Discard one card, test if the hand size is reduced by one
 	 */
-	private boolean cardAppearsInSet(Card matchingCard, Vector<Card> cardSet)
-	{
-		int setSize = cardSet.size();
-		Suit matchingSuit = matchingCard.getSuit();
-		CardValue matchingValue = matchingCard.getValue();
-		boolean suitsMatch = false;
-		boolean valuesMatch = false;
+	
+	public void reduceByOne(){
+		Vector<Card> cards = new Vector<Card>();
+		cards.add(new Card(Suit.HEARTS, CardValue.ACE));
+		cards.add(new Card(Suit.CLUBS, CardValue.SIX));
+		cards.add(new Card(Suit.SPADES, CardValue.TEN));
+		cards.add(new Card(Suit.DIAMONDS, CardValue.QUEEN));
+		cards.add(new Card(Suit.SPADES, CardValue.THREE));
 		
-		/*
-		 * Run a loop that iterates through the card set and finds the suit
-		 * and value of every card in the set. If the loop finds a card that matches
-		 * the matching suit and value, it will return true. 
-		 */
-		for(int i = 0; i < setSize; i++)
-		{
-			Card currentCard = cardSet.get(i);
-			Suit currentSuit = currentCard.getSuit();
-			CardValue currentValue = currentCard.getValue();
-			
-			//Do the suits match?
-			if(matchingSuit.equals(currentSuit))
-			{
-				suitsMatch = true;
-			}
-			
-			//Do the card values match?
-			if(matchingValue.equals(currentValue))
-			{
-				valuesMatch = true;
-			}
-			
-			//If the suits and values match, return true
-			if(suitsMatch && valuesMatch)
-			{
-				return true;
-			}
-		}
-		
-		return false;
-		
-		//What's up Dr. Plante.
-	}
+		Hand hand = new Hand(12);
 
+		for (Card c : cards) {
+			hand.addCard(c);
+		}
+
+		hand.getCards().get(0).toggleSelected();
+		hand.discard();
+		assertTrue(hand.getCards().size() == 4);
+	}
+	
+	/**
+	 * Add a card, if the hand is already full, return false
+	 * Testing the addCard() method
+	 */
+	public void exceedMax(){
+		Hand hand = new Hand(1);
+		
+		Card card1 = new Card(Suit.CLUBS, CardValue.TWO);
+		Card card2 = new Card(Suit.HEARTS, CardValue.TWO);
+		assertTrue(hand.addCard(card1));
+		assertFalse(hand.addCard(card2));
+	}
+	
 }
