@@ -72,9 +72,9 @@ public class Card
    * Compare this card to another card by matching
    * their suits and values.
    * @param card the card that will be compared to
-   * @return 0 if the cards are the same, -1 if either
-   * the suits or the values are different, and 1 if
-   * both the suits and the values are different.
+   * @return 0 if the cards are the same, -1 if the
+   * suits are the same but the values are different,
+   * and 1 if both the suits and the values are different.
    * @author Bryan Pearson
    */
   public int compareTo(Card card) 
@@ -105,12 +105,6 @@ public class Card
 	  
 	  //Return -1 if suits are the same but values different
 	  else if(suitSimilarity == 0 && valueSimilarity != 0)
-	  {
-		  return -1;
-	  }
-	  
-	  //Return -1 if suits are different but values the same
-	  else if(suitSimilarity != 0 && valueSimilarity == 0)
 	  {
 		  return -1;
 	  }
