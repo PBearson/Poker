@@ -6,8 +6,8 @@ import java.util.*;
 public class Deck 
 {
 	/**
-	 * Handles the deck
-	 * @author Michael Zirpoli
+	 * This is a deck that holds up to 52 cards. 
+	 * Cards can be dealt, shuffled, and cut.
 	 * @author Bryan Pearson
 	 */
 	
