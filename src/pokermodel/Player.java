@@ -7,27 +7,67 @@ public class Player
   private String myName;
 
   private PokerHand myHand;
+  
+  /**
+   * The Player class keeps track of the player's name,
+   * score, and current hand.
+   * @author Bryan Pearson
+   */
 
+  /**
+   * Constructor initializes the player
+   * @param name the player's name
+   * @author Bryan Pearson
+   */
   public Player(String name) 
   {
 	  myName = name;
+	  myNumberOfWins = 0;
   }
 
+  /**
+   * Check if the name is valid. If the name 
+   * is blank or exceeds 10 characters, it is 
+   * invalid.
+   * @return true if valid, false if invalid
+   */
   public boolean isValidName() 
   {
-	  return false;
+	  if(myName.length() == 0 || myName.length() > 10)
+	  {
+		  return false;
+	  }
+	  else
+	  {
+		  return true;
+	  }
   }
 
+  /**
+   * Increment the score by 1.
+   * @return the new score
+   * @author Bryan Pearson
+   */
   public int incrementScore() 
   {
-	  return 0;
+	  myNumberOfWins++;
+	  return myNumberOfWins;
   }
 
+  /**
+   * Print a string representation of the class
+   * @author Bryan Pearson
+   */
   public String toString() 
   {
-	  return null;
+	  return "Player name: " + myName + "\nCurrent score: " + myNumberOfWins;
   }
-
+  	
+    /*
+     * *********************
+     * ACCESSORS & MUTATORS
+     * *********************
+     */
 	public String getName() 
 	{
 		return myName;
@@ -46,5 +86,10 @@ public class Player
 	public PokerHand getHand() 
 	{
 		return myHand;
+	}
+	
+	public void setHand(PokerHand hand)
+	{
+		myHand = hand;
 	}
 }
