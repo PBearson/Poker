@@ -120,7 +120,39 @@ public class PokerHand extends Hand
 
   public boolean isThreeOfKind() 
   {
-	  return false;
+int numberOfDuplicates = 0;
+	  
+	  /*
+	   * Same thing as isPair() method except now we are
+	   * checking to see if 3 duplicate cards appear
+	   */
+	  for(int i = 0; i < this.getCards().size(); i++)
+	  {
+		  Card currentCard = this.getCards().get(i);
+		  CardValue currentValue = currentCard.getValue();
+		  
+		  for(int s = 0; s < this.getCards().size(); s++)
+		  {
+			  Card otherCard = this.getCards().get(s);
+			  CardValue otherValue = otherCard.getValue();
+			  
+			  //If the values are the same and the cards are different, 
+			  //It's a high card
+			  if(currentValue.compareTo(otherValue) == 0 && i != s)
+			  {
+				  numberOfDuplicates++;
+			  }
+		  }
+	  }
+	  
+	  if(numberOfDuplicates == 3)
+	  {
+		  return true;
+	  }
+	  else
+	  {
+		  return false;
+	  }
   }
 
   public boolean isStraight() 
@@ -140,7 +172,39 @@ public class PokerHand extends Hand
 
   public boolean isFourOfKind() 
   {
-	  return false;
+int numberOfDuplicates = 0;
+	  
+	  /*
+	   * Same thing as isPair() method except now we are
+	   * checking to see if 4 duplicate cards appear
+	   */
+	  for(int i = 0; i < this.getCards().size(); i++)
+	  {
+		  Card currentCard = this.getCards().get(i);
+		  CardValue currentValue = currentCard.getValue();
+		  
+		  for(int s = 0; s < this.getCards().size(); s++)
+		  {
+			  Card otherCard = this.getCards().get(s);
+			  CardValue otherValue = otherCard.getValue();
+			  
+			  //If the values are the same and the cards are different, 
+			  //It's a high card
+			  if(currentValue.compareTo(otherValue) == 0 && i != s)
+			  {
+				  numberOfDuplicates++;
+			  }
+		  }
+	  }
+	  
+	  if(numberOfDuplicates == 4)
+	  {
+		  return true;
+	  }
+	  else
+	  {
+		  return false;
+	  }
   }
 
   public boolean isStraightFlush() 
