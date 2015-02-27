@@ -46,13 +46,26 @@ public class Hand
 	  }
 	  
 	  return numberOfDiscards;
-	  
-	  return 0;
   }
 
+  /**
+   * Add a new card if the hand is not full
+   * @param card the card being added
+   * @return true if the card is added,
+   * false if the hand is full
+   * @author Bryan Pearson
+   */
   public boolean addCard(Card card) 
   {
-	  return false;
+	  if(this.getCards().size() < myMaxNumberCards)
+	  {
+		  this.getCards().addElement(card);
+		  return true;
+	  }
+	  else
+	  {
+		  return false;
+	  }
   }
 
   public Vector<Card> getCards()
