@@ -24,8 +24,6 @@ public class Deck
   public Deck() 
   {
 	  initializeDeck();
-	  shuffle();
-	  cut();
   }
   
   /**
@@ -36,8 +34,6 @@ public class Deck
   public Deck(Vector<Card> customDeck)
   {
 	  myCards = customDeck;
-	  shuffle();
-	  cut();
   }
   
   /**
@@ -131,6 +127,7 @@ public class Deck
 			  myCards.add(card);
 		  }  
 	  }
+
   }
   
   /**
@@ -151,6 +148,12 @@ public class Deck
    */
   public Card deal() 
   {
+	  //If the deck is empty then return null
+	  if(myCards.size() == 0)
+	  {
+		  return null;
+	  }
+	  
 	  //Get the top card
 	  Card card = myCards.get(0);
 	  

@@ -30,6 +30,7 @@ public class Player
    * is blank or exceeds 10 characters, it is 
    * invalid.
    * @return true if valid, false if invalid
+   * @author Bryan Pearson
    */
   public boolean isValidName() 
   {

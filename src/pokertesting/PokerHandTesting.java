@@ -19,7 +19,8 @@ public class PokerHandTesting
 	 */
 	
 	@Test
-	public void highCardTest() {
+	public void highCardTest() 
+	{
 		PokerHand hand = new PokerHand(5);	
 		hand.addCard(new Card(Suit.SPADES, CardValue.JACK));
 		hand.addCard(new Card(Suit.DIAMONDS, CardValue.THREE));

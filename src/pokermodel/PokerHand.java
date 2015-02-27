@@ -62,7 +62,7 @@ public class PokerHand extends Hand
 
   public String toString() 
   {
-	  return null;
+	  return "Hand: " + this.getCards();
   }
   
   public Object clone()
@@ -72,7 +72,7 @@ public class PokerHand extends Hand
 
   public int compareTo(PokerHand hand) 
   {
-	  return 0;
+	  return(this.compareTo(hand));
   }
 
   public int determineRank() 
