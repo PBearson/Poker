@@ -56,9 +56,46 @@ public class PokerHand extends Hand
 	  return false;
   }
 
+  /**
+   * Check if the hand is a two pair
+   * @return true if the hand is a two pair
+   * @author Bryan Pearson
+   */
   public boolean isTwoPair() 
   {
-	  return false;
+	  int numberOfPairs = 0;
+	  
+	  /*
+	   * Same thing as isPair() method except now we are
+	   * checking to see if 2 pairs appear
+	   */
+	  for(int i = 0; i < this.getCards().size(); i++)
+	  {
+		  Card currentCard = this.getCards().get(i);
+		  CardValue currentValue = currentCard.getValue();
+		  
+		  for(int s = 0; s < this.getCards().size(); s++)
+		  {
+			  Card otherCard = this.getCards().get(s);
+			  CardValue otherValue = otherCard.getValue();
+			  
+			  //If the values are the same and the cards are different, 
+			  //It's a high card
+			  if(currentValue.compareTo(otherValue) == 0 && i != s)
+			  {
+				  numberOfPairs++;
+			  }
+		  }
+	  }
+	  
+	  if(numberOfPairs == 2)
+	  {
+		  return true;
+	  }
+	  else
+	  {
+		  return false;
+	  }
   }
 
   public boolean isThreeOfKind() 

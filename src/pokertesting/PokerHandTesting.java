@@ -446,7 +446,8 @@ public class PokerHandTesting
 	}
 	
 	@Test
-	public void handOneIsWorse() {
+	public void handOneIsWorse() 
+	{
 		PokerHand hand1 = new PokerHand(5);	
 		hand1 = new PokerHand(5);
 		PokerHand hand2 = new PokerHand(5);	
