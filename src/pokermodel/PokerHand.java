@@ -64,6 +64,9 @@ public class PokerHand extends Hand
   public boolean isTwoPair() 
   {
 	  int numberOfPairs = 0;
+	  Card cardMatch1, cardMatch2;
+	  cardMatch1 = new Card(Suit.CLUBS, CardValue.ACE);
+	  cardMatch2 = new Card(Suit.CLUBS, CardValue.ACE);
 	  
 	  /*
 	   * Same thing as isPair() method except now we are
@@ -78,24 +81,41 @@ public class PokerHand extends Hand
 		  {
 			  Card otherCard = this.getCards().get(s);
 			  CardValue otherValue = otherCard.getValue();
+			  int comparingCards = currentValue.compareTo(otherValue);
 			  
-			  //If the values are the same and the cards are different, 
-			  //It's a high card
-			  if(currentValue.compareTo(otherValue) == 0 && i != s)
+			  /*
+			   * If the values are the same and the cards are different,
+			   * it's a high card.
+			   */
+			  if(comparingCards == 0 && i != s)
 			  {
-				  numberOfPairs++;
+				  /*
+				   * If a match hasn't been found yet, add the match
+				   * and record the cards that were matched.
+				   */
+				  if(numberOfPairs == 0)
+				  {
+					  numberOfPairs++;
+					  cardMatch1 = currentCard;
+					  cardMatch2 = otherCard;
+				  }
+				  
+				  /*
+				   * If one match has been found, we need to make sure that
+				   * any other match includes new cards
+				   */
+				  else if(currentCard != cardMatch1 && currentCard != cardMatch2)
+				  {
+					  if(otherCard != cardMatch1 && otherCard != cardMatch2)
+					  {
+						  return true;
+					  }
+				  }
 			  }
 		  }
 	  }
 	  
-	  if(numberOfPairs == 2)
-	  {
-		  return true;
-	  }
-	  else
-	  {
-		  return false;
-	  }
+	  return false;
   }
 
   public boolean isThreeOfKind() 
