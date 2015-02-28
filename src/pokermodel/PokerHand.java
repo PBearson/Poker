@@ -123,11 +123,8 @@ public class PokerHand extends Hand
 
   public boolean isThreeOfKind() 
   {
-<<<<<<< HEAD
-int numberOfDuplicates = 1;
-=======
-   int numberOfDuplicates = 0;
->>>>>>> 75fba1c605769dcd5af68fa26503f5861f4fe7b1
+int numberOfDuplicates = 0;
+
 	  
 	  /*
 	   * Same thing as isPair() method except now we are
@@ -205,7 +202,14 @@ int numberOfDuplicates = 1;
 
   public boolean isFullHouse() 
   {
-	  return false;
+	  if (isThreeOfKind() == TRUE && twoPair() == TRUE)
+	  {  
+		  return true;
+	  }
+	  else
+	  {  
+		  return false;
+	  }
   }
 
   public boolean isFourOfKind() 
@@ -235,7 +239,7 @@ int numberOfDuplicates = 0;
 		  }
 	  }
 	  
-	  if(numberOfDuplicates == 4)
+	  if(numberOfDuplicates == 3)
 	  {
 		  return true;
 	  }
