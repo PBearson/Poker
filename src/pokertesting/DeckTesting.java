@@ -36,7 +36,7 @@ public class DeckTesting
 	{
 		Deck deck = new Deck();
 		Vector<Card> cardsDrawn = new Vector<Card>();
-		for (int i = 0; i <Deck.MAX_NUM_CARDS; i++)
+		for (int i = 0; i < Deck.MAX_NUM_CARDS; i++)
 		{
 			cardsDrawn.add(deck.deal());
 		}
@@ -45,7 +45,7 @@ public class DeckTesting
 		{
 			for (CardValue c : cardValue)
 			{
-				assertTrue(""+s+" "+c+" not found", cardsDrawn.contains(new Card( s, c)));
+				assertTrue(""+c+" of "+s+" not found", searchForCard(new Card(s, c), cardsDrawn));
 			}
 		}
 		
@@ -95,8 +95,7 @@ public class DeckTesting
 	}
 	
 	/**
-	 * clone deck, draw card from clone, cut original, draw 27 times,
-	 * assert 27th card is same as card drawn from clone 
+	 * clone deck, cut deck, then test it still contains all cards
 	 */
 	
 	@Test
@@ -115,7 +114,7 @@ public class DeckTesting
 		{
 			for (CardValue c : cardValue)
 			{
-				assertTrue(""+s+" "+c+" not found", cardsDrawn.contains(new Card( s, c)));
+				assertTrue(""+c+" of "+s+" not found", searchForCard(new Card(s, c), cardsDrawn));
 			}
 		}
 
@@ -125,7 +124,7 @@ public class DeckTesting
 	 * Make sure that 52 cards are in the deck.
 	 */
 	@Test
-	public void allCardsInDeck()
+	public void deckSizeIsCorrect()
 	{
 		Deck deck = new Deck();
 		int deckSize = deck.getCards().size();
@@ -385,4 +384,15 @@ public class DeckTesting
 		
 		return counter;
 	}
+	
+	private boolean searchForCard(Card c, Vector<Card> cards){
+		for (int i = cards.size() - 1; i >= 0; i--){
+			if (c.getSuit().getSuit() == cards.get(i).getSuit().getSuit()
+					&& c.compareTo(cards.get(i))==0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }
