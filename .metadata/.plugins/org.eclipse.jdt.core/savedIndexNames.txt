@@ -1,0 +1,1 @@
+INDEX VERSION 1.127+C:\Users\Noname4505\Documents\GitHub\Poker\.metadata\.plugins\org.eclipse.jdt.core

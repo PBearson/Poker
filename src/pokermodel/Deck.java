@@ -6,10 +6,11 @@ import java.util.*;
 public class Deck 
 {
 	/**
-	 * Handles the deck
-	 * @author Michael Zirpoli
+	 * This is a deck that holds up to 52 cards. 
+	 * Cards can be dealt, shuffled, and cut.
 	 * @author Bryan Pearson
 	 */
+	
   private Vector<Card> myCards;
 
   public static int MAX_NUM_CARDS = 52;
@@ -17,14 +18,22 @@ public class Deck
   public static int NUM_VALUES = 13;
 
   /**
-   * Constructor creates and shuffles the deck
+   * Create the deck
    * Bryan Pearson
    */
   public Deck() 
   {
 	  initializeDeck();
-	  shuffle();
-	  cut();
+  }
+  
+  /**
+   * Create the deck
+   * @param customDeck a vector of cards that will become the deck
+   * @author Bryan Pearson
+   */
+  public Deck(Vector<Card> customDeck)
+  {
+	  myCards = customDeck;
   }
   
   /**
@@ -118,6 +127,7 @@ public class Deck
 			  myCards.add(card);
 		  }  
 	  }
+
   }
   
   /**
@@ -138,6 +148,13 @@ public class Deck
    */
   public Card deal() 
   {
+	  //If the deck is empty then return null
+	  if(myCards.size() == 0)
+	  {
+		  return null;
+	  }
+	  
+	  //Get the top card
 	  Card card = myCards.get(0);
 	  
 	  //The card is now removed from the deck
@@ -154,18 +171,64 @@ public class Deck
    */
   public boolean cut() 
   {
-	  //TODO
-	  return false;
+	  if(myCards.size() > 1)
+	  {
+		  int cutSize = myCards.size() / 2;
+	  
+		  /*Iterate through the first half of the deck and 
+		   * move them to the bottom by removing them first
+		   * and then re-adding them.
+		   */
+		  for(int i = 0; i < cutSize; i++)
+		  {
+			  Card currentCard = myCards.get(i);
+			  myCards.remove(i);
+			  myCards.add(currentCard);
+		  }
+		  
+		  return true;
+	  }
+	  
+	  else
+	  {
+		  return false;
+	  }
+	  
   }
 
+  /**
+   * Print the deck to a string
+   * @author Bryan Pearson
+   */
   public String toString() 
   {
-	  return null;
+	  String message = "";
+	  
+	  //Print all suits and values
+	  for(int i = 0; i < myCards.size(); i++)
+	  {
+		  Card currentCard = myCards.get(i);
+		  Suit currentSuit = currentCard.getSuit();
+		  CardValue currentValue = currentCard.getValue();
+		  
+		  message = message.concat("\n" + currentSuit.toString() + " " 
+		  + currentValue.toString());
+	  }
+	  
+	  //Print deck size
+	  message = message.concat("\nCards in deck: " + myCards.size());
+	  
+	  return message;
   }
 
+  /**
+   * Clones the current deck
+   * @author Bryan Pearson
+   */
   public Object clone() 
   {
-	  return null;
+	  Deck deck = new Deck(myCards);
+	  return deck;
   }
 
   public Vector<Card> getCards()
