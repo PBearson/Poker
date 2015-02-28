@@ -1,5 +1,8 @@
 package pokermodel;
 
+import java.util.Collections;
+import java.util.Vector;
+
 public class PokerHand extends Hand 
 {
 
@@ -120,7 +123,7 @@ public class PokerHand extends Hand
 
   public boolean isThreeOfKind() 
   {
-int numberOfDuplicates = 0;
+   int numberOfDuplicates = 0;
 	  
 	  /*
 	   * Same thing as isPair() method except now we are
@@ -135,17 +138,58 @@ int numberOfDuplicates = 0;
 		  {
 			  Card otherCard = this.getCards().get(s);
 			  CardValue otherValue = otherCard.getValue();
+			  numberOfDuplicates = 0;
 			  
 			  //If the values are the same and the cards are different, 
 			  //It's a high card
 			  if(currentValue.compareTo(otherValue) == 0 && i != s)
 			  {
 				  numberOfDuplicates++;
+				  
+				  if(numberOfDuplicates == 2)
+				  {
+					  return true;
+				  }
 			  }
 		  }
 	  }
 	  
-	  if(numberOfDuplicates == 3)
+	  return false;
+  }
+
+  /**
+   * Check if the hand is a straight
+   * @return true if the hand is a straight
+   * @author Bryan Pearson
+   */
+  public boolean isStraight() 
+  {  
+	  
+	  return false;
+  }
+
+  /**
+   * Check if the hand is a flush
+   * @return true if the hand is a flush
+   * @author Bryan Pearson
+   */
+  public boolean isFlush() 
+  {
+	  int handSize = this.getCards().size();
+	  int numberOfMatches = 0;
+	  int maxNumberOfMatches = this.getCards().size() - 1;
+	  
+	  Suit firstSuit = this.getCards().get(0).getSuit();
+	  
+	  for(int i = 1; i <= handSize; i++)
+	  {
+		  if(this.getCards().get(i).getSuit().compareTo(firstSuit) == 0)
+		  {
+			  numberOfMatches++;
+		  }
+	  }
+	  
+	  if(numberOfMatches == maxNumberOfMatches)
 	  {
 		  return true;
 	  }
@@ -153,16 +197,6 @@ int numberOfDuplicates = 0;
 	  {
 		  return false;
 	  }
-  }
-
-  public boolean isStraight() 
-  {
-	  return false;
-  }
-
-  public boolean isFlush() 
-  {
-	  return false;
   }
 
   public boolean isFullHouse() 
