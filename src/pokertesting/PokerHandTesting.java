@@ -391,7 +391,7 @@ public class PokerHandTesting
 		}
 		hand.getCards().get(1).toggleSelected();
 		hand.discard();
-		assertTrue(hand.getCards().size() == 5);
+		assertTrue(hand.getCards().size() == 1);
 	}
 
 	/**

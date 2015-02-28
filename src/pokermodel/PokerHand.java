@@ -202,7 +202,7 @@ int numberOfDuplicates = 0;
 
   public boolean isFullHouse() 
   {
-	  if (isThreeOfKind() == TRUE && twoPair() == TRUE)
+	  if (isThreeOfKind() == TRUE && isTwoPair() == TRUE)
 	  {  
 		  return true;
 	  }
@@ -251,7 +251,14 @@ int numberOfDuplicates = 0;
 
   public boolean isStraightFlush() 
   {
-	  return false;
+	  if (isStraight() == TRUE && twoFlush() == TRUE)
+	  {  
+		  return true;
+	  }
+	  else
+	  {  
+		  return false;
+	  }
   }
 
   public boolean isRoyalFlush() 

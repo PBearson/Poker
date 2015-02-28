@@ -208,27 +208,7 @@ public class DeckTesting
 		assertTrue(numberOfEqualCards < deckSize);
 	}
 	
-	/**
-	 * Test to make sure that every card in the deck is unique
-	 */
-	@Test
-	public void noDuplicateCards()
-	{
-		Deck deck = new Deck();
-		Vector<Card> deckSet1 = deck.getCards();
-		deck = new Deck();
-		Vector<Card> deckSet2 = deck.getCards();
-		
-		/*
-		 * The PokerModelTesting class has a method that
-		 * can compare 2 card sets and return a boolean
-		 * that tells whether any duplicate cards exist.
-		 */
-		PokerModelTesting pmt = new PokerModelTesting();
-		
-		//Assert that no duplicate cards appear in the deck
-		assertFalse(pmt.compareCards(deckSet1, deckSet2));
-	}
+	
 	
 	/*
 	 * *********************************
