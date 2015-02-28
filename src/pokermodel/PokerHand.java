@@ -120,7 +120,7 @@ public class PokerHand extends Hand
 
   public boolean isThreeOfKind() 
   {
-int numberOfDuplicates = 0;
+int numberOfDuplicates = 1;
 	  
 	  /*
 	   * Same thing as isPair() method except now we are
