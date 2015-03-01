@@ -251,7 +251,7 @@ int numberOfDuplicates = 0;
 
   public boolean isStraightFlush() 
   {
-	  if (isStraight() == TRUE && twoFlush() == TRUE)
+	  if (isStraight() == TRUE && isFlush() == TRUE)
 	  {  
 		  return true;
 	  }
